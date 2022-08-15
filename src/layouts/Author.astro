@@ -1,11 +1,10 @@
 ---
-import type { MarkdownInstance } from "astro";
-import type { Author } from "src/types";
-import Layout from "./Layout.astro";
-import { Picture } from "@astrojs/image/components";
+import type { MarkdownInstance } from 'astro'
+import type { Author } from 'src/types'
+import Layout from './Layout.astro'
+import { Picture } from '@astrojs/image/components'
 
 const { frontmatter } = Astro.props as MarkdownInstance<Author>
-
 ---
 
 <Layout title="">
@@ -13,16 +12,27 @@ const { frontmatter } = Astro.props as MarkdownInstance<Author>
     <article>
       <h1>{frontmatter.name}</h1>
       <div class="about">
-        <Picture src={frontmatter.image} widths={[150, 300, 450]} aspectRatio={1} sizes="150px" />
+        <Picture
+          src={frontmatter.image}
+          widths={[150, 300, 450]}
+          aspectRatio={1}
+          sizes="150px"
+        />
         <div class="information">
           <p class="description">{frontmatter.description}</p>
           <h2>Contact</h2>
           <address>
             <dl>
               <dt>Email</dt>
-              <dd><a href={`mailto:${frontmatter.email}`}>{frontmatter.email}</a></dd>
+              <dd>
+                <a href={`mailto:${frontmatter.email}`}>{frontmatter.email}</a>
+              </dd>
               <dt>Twitter</dt>
-              <dd><a href={`https://twitter.com/${frontmatter.twitter}`}>{frontmatter.twitter}</a></dd>
+              <dd>
+                <a href={`https://twitter.com/${frontmatter.twitter}`}
+                  >{frontmatter.twitter}
+                </a>
+              </dd>
             </dl>
           </address>
         </div>

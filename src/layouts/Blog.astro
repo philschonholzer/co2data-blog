@@ -1,13 +1,15 @@
 ---
-import type { MarkdownInstance } from "astro";
-import type { Author, BlogPost } from "src/types";
-import Layout from "./Layout.astro";
+import type { MarkdownInstance } from 'astro'
+import type { Author, BlogPost } from 'src/types'
+import Layout from './Layout.astro'
 
 const { frontmatter } = Astro.props as MarkdownInstance<BlogPost>
-const datetime = new Date(frontmatter.publishDate).toISOString().split('T').at(0)
+const datetime = new Date(frontmatter.publishDate)
+  .toISOString()
+  .split('T')
+  .at(0)
 
-const author = await import(frontmatter.author) as MarkdownInstance<Author>
-
+const author = (await import(frontmatter.author)) as MarkdownInstance<Author>
 ---
 
 <Layout title="">
@@ -17,7 +19,10 @@ const author = await import(frontmatter.author) as MarkdownInstance<Author>
         <h1>{frontmatter.title}</h1>
         <p class="description">{frontmatter.description}</p>
         <div class="information">
-          <address><a rel="author" href={author.url}>{author.frontmatter.name}</a></address> <i>on</i>
+          <address>
+            <a rel="author" href={author.url}>{author.frontmatter.name}</a>
+          </address>
+          <i>on</i>
           <time datetime={datetime}>{datetime}</time>
         </div>
       </header>
