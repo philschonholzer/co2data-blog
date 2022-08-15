@@ -3,11 +3,13 @@ lockfileVersion: 5.4
 specifiers:
   '@astrojs/image': ^0.3.4
   '@astrojs/mdx': ^0.8.3
+  '@fontsource/open-sans': ^4.5.11
   astro: ^1.0.3
 
 devDependencies:
   '@astrojs/image': 0.3.4
   '@astrojs/mdx': 0.8.3
+  '@fontsource/open-sans': 4.5.11
   astro: 1.0.3
 
 packages:
@@ -399,6 +401,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@fontsource/open-sans/4.5.11:
+    resolution: {integrity: sha512-nG0gmbx4pSr8wltdG/ZdlS6OrsMK40Wt6iyuLTKHEf0TQfzKRMlWaskZHdeuWCwS6WUgqHKMf9KSwGdxPfapOg==}
+    dev: true
 
   /@jridgewell/gen-mapping/0.1.1:
     resolution: {integrity: sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==}

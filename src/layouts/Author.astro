@@ -1,0 +1,88 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Author } from "src/types";
+import Layout from "./Layout.astro";
+import { Picture } from "@astrojs/image/components";
+
+const { frontmatter } = Astro.props as MarkdownInstance<Author>
+
+---
+
+<Layout title="">
+  <main>
+    <article>
+      <h1>{frontmatter.name}</h1>
+      <div class="about">
+        <Picture src={frontmatter.image} widths={[150, 300, 450]} aspectRatio={1} sizes="150px" />
+        <div class="information">
+          <p class="description">{frontmatter.description}</p>
+          <h2>Contact</h2>
+          <address>
+            <dl>
+              <dt>Email</dt>
+              <dd><a href={`mailto:${frontmatter.email}`}>{frontmatter.email}</a></dd>
+              <dt>Twitter</dt>
+              <dd><a href={`https://twitter.com/${frontmatter.twitter}`}>{frontmatter.twitter}</a></dd>
+            </dl>
+          </address>
+        </div>
+      </div>
+      <slot />
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1em;
+    max-width: 50ch;
+  }
+
+  .about {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2em;
+  }
+
+  .information {
+    flex: 1 1 16em;
+  }
+
+  :global(picture) {
+    margin-inline: auto;
+  }
+
+  :global(img) {
+    width: 150px;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  .description {
+    font-weight: bold;
+    margin-top: 0;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.2em 1em;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--accent-color);
+    font-style: normal;
+  }
+
+  dd {
+    margin: 0;
+  }
+</style>
+
+<style is:global>
+  p {
+    line-height: 1.5em;
+  }
+</style>

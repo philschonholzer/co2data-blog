@@ -1,0 +1,73 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Author, BlogPost } from "src/types";
+import Layout from "./Layout.astro";
+
+const { frontmatter } = Astro.props as MarkdownInstance<BlogPost>
+const datetime = new Date(frontmatter.publishDate).toISOString().split('T').at(0)
+
+const author = await import(frontmatter.author) as MarkdownInstance<Author>
+
+---
+
+<Layout title="">
+  <main>
+    <article>
+      <header>
+        <h1>{frontmatter.title}</h1>
+        <p class="description">{frontmatter.description}</p>
+        <div class="information">
+          <address><a rel="author" href={author.url}>{author.frontmatter.name}</a></address> <i>on</i>
+          <time datetime={datetime}>{datetime}</time>
+        </div>
+      </header>
+      <slot />
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1em;
+    max-width: 50ch;
+  }
+
+  h1 {
+    margin-bottom: 0;
+  }
+
+  header {
+    margin-bottom: 2em;
+  }
+
+  .description {
+    font-weight: bold;
+  }
+
+  .information {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--accent-color);
+  }
+
+  .information address {
+    display: inline;
+    font-style: normal;
+  }
+
+  .information address a {
+    color: inherit;
+  }
+
+  .information i {
+    font-style: normal;
+    opacity: 0.6;
+  }
+</style>
+
+<style is:global>
+  p {
+    line-height: 1.5em;
+  }
+</style>
