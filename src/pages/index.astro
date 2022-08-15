@@ -8,16 +8,18 @@ const posts = await Astro.glob<BlogPost>('./*.mdx')
 <Layout title="Welcome to Astro.">
   <main>
     <h1>CO<sub>2</sub> data <span class="text-gradient">blog</span></h1>
-    {
-      posts.map(
-        (post) =>
-          post.url && (
-            <Card href={post.url} title={post.frontmatter.title}>
-              {post.frontmatter.description}
-            </Card>
-          )
-      )
-    }
+    <div>
+      {
+        posts.map(
+          (post) =>
+            post.url && (
+              <Card href={post.url} title={post.frontmatter.title}>
+                {post.frontmatter.description}
+              </Card>
+            )
+        )
+      }
+    </div>
   </main>
 </Layout>
 
@@ -34,6 +36,12 @@ const posts = await Astro.glob<BlogPost>('./*.mdx')
     margin-inline: auto;
     padding: 1em;
     max-width: var(--page-width);
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
   }
 
   .text-gradient {
