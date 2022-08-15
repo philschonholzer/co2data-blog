@@ -1,9 +1,58 @@
 ---
 ---
 
+<script>
+  window.addEventListener('load', function () {
+    let observer = new IntersectionObserver((entries) => {
+      if (entries[0] && entries[0].boundingClientRect.y < -1) {
+        document.body.classList.add('scrolled-down')
+      } else {
+        document.body.classList.remove('scrolled-down')
+      }
+    })
+    observer.observe(document.querySelector('#top-of-site-pixel-anchor')!)
+  })
+</script>
+
 <header>
   <nav>
-    <a href="co2data.org">CO<sub>2</sub>data</a>
-    <a href="/">Blog</a>
+    <a href="/">CO<sub>2</sub> data blog</a>
+    <a href="//co2data.org">co2data.org</a>
   </nav>
 </header>
+<div id="top-of-site-pixel-anchor"></div>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    border-bottom: 1px solid transparent;
+    transition: border 200ms;
+    z-index: 99;
+  }
+
+  :global(.scrolled-down) header {
+    border-bottom: 1px solid var(--accent-color);
+  }
+
+  nav {
+    display: flex;
+    font-weight: 800;
+    justify-content: space-between;
+    margin-inline: auto;
+    padding: 1em max(1em, 5vw - 0.5em);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  #top-of-site-pixel-anchor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    top: 0;
+    left: 0;
+  }
+</style>
