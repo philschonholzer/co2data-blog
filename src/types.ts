@@ -1,8 +1,9 @@
+type FilePath = string
 export type BlogPost = {
   title: string
   description: string
-  image: string
-  author: string
+  image: FilePath
+  author: FilePath
   publishDate: string
   updateDate?: string | undefined
 }

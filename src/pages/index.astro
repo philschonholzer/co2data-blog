@@ -1,5 +1,5 @@
 ---
-import Card from '@components/Card.astro'
+import BlogPreview from '@components/BlogPreview.astro'
 import type { BlogPost } from 'src/types'
 import Layout from '../layouts/Layout.astro'
 const posts = await Astro.glob<BlogPost>('./*.mdx')
@@ -13,9 +13,7 @@ const posts = await Astro.glob<BlogPost>('./*.mdx')
         posts.map(
           (post) =>
             post.url && (
-              <Card href={post.url} title={post.frontmatter.title}>
-                {post.frontmatter.description}
-              </Card>
+              <BlogPreview blogPost={post.frontmatter} url={post.url} />
             )
         )
       }
@@ -41,7 +39,8 @@ const posts = await Astro.glob<BlogPost>('./*.mdx')
   div {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 3em;
+    margin-top: 6em;
   }
 
   .text-gradient {
