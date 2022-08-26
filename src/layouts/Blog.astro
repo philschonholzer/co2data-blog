@@ -10,7 +10,7 @@ const datetime = new Date(frontmatter.publishDate)
   .at(0)
 
 const author = (await import(
-  /* @vite-ignore */ frontmatter.author
+  `../pages/author/${frontmatter.author}/index.mdx`
 )) as MarkdownInstance<Author>
 ---
 

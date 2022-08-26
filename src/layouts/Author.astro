@@ -5,6 +5,13 @@ import Layout from './Layout.astro'
 import { Picture } from '@astrojs/image/components'
 
 const { frontmatter } = Astro.props as MarkdownInstance<Author>
+const image = (
+  await import(
+    `../pages/author/${frontmatter.url.split('/').at(-1)}/${
+      frontmatter.image
+    }.jpg`
+  )
+).default
 ---
 
 <Layout title="">
@@ -13,7 +20,7 @@ const { frontmatter } = Astro.props as MarkdownInstance<Author>
       <h1>{frontmatter.name}</h1>
       <div class="about">
         <Picture
-          src={frontmatter.image}
+          src={image}
           widths={[150, 300, 450]}
           aspectRatio={1}
           sizes="150px"

@@ -14,4 +14,5 @@ export type Author = {
   description: string
   email: string
   twitter: string
+  url: string
 }
