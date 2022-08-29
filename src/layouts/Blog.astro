@@ -1,13 +1,11 @@
 ---
 import type { MarkdownInstance } from 'astro'
 import type { Author, BlogPost } from 'src/types'
+import { formatDate } from 'src/utils'
 import Layout from './Layout.astro'
 
 const { frontmatter } = Astro.props as MarkdownInstance<BlogPost>
-const datetime = new Date(frontmatter.publishDate)
-  .toISOString()
-  .split('T')
-  .at(0)
+const date = formatDate(frontmatter.publishDate)
 
 const author = (await import(
   `../pages/author/${frontmatter.author}/index.mdx`
@@ -25,7 +23,7 @@ const author = (await import(
             <a rel="author" href={author.url}>{author.frontmatter.name}</a>
           </address>
           <i>on</i>
-          <time datetime={datetime}>{datetime}</time>
+          <time datetime={date}>{date}</time>
         </div>
       </header>
       <slot />
