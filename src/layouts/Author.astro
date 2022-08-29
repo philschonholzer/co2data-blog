@@ -7,9 +7,7 @@ import { Picture } from '@astrojs/image/components'
 const { frontmatter } = Astro.props as MarkdownInstance<Author>
 const image = (
   await import(
-    `../pages/author/${frontmatter.url.split('/').at(-1)}/${
-      frontmatter.image
-    }.jpg`
+    `../pages/author/${frontmatter.url.split('/').at(-1)}/image.jpg`
   )
 ).default
 ---
