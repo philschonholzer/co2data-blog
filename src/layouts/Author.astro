@@ -3,13 +3,11 @@ import type { MarkdownInstance } from 'astro'
 import type { Author } from 'src/types'
 import Layout from './Layout.astro'
 import { Picture } from '@astrojs/image/components'
+import { authorImage, slugFromUrl } from 'src/utils'
 
 const { frontmatter } = Astro.props as MarkdownInstance<Author>
-const image = (
-  await import(
-    `../pages/author/${frontmatter.url.split('/').at(-1)}/image.jpg`
-  )
-).default
+
+const image = await authorImage(slugFromUrl(frontmatter.url))
 ---
 
 <Layout title="">
@@ -18,6 +16,7 @@ const image = (
       <h1>{frontmatter.name}</h1>
       <div class="about">
         <Picture
+          class="author-image"
           src={image}
           widths={[150, 300, 450]}
           aspectRatio={1}
@@ -65,11 +64,11 @@ const image = (
     flex: 1 1 16em;
   }
 
-  :global(picture) {
+  .author-image :global(picture) {
     margin-inline: auto;
   }
 
-  :global(img) {
+  .author-image :global(img) {
     width: 150px;
     height: auto;
     aspect-ratio: 1;

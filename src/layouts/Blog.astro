@@ -1,15 +1,17 @@
 ---
+import { Picture } from '@astrojs/image/components'
 import type { MarkdownInstance } from 'astro'
 import type { Author, BlogPost } from 'src/types'
-import { formatDate } from 'src/utils'
+import { authorImage, authorMdx, formatDate, slugFromUrl } from 'src/utils'
 import Layout from './Layout.astro'
 
 const { frontmatter } = Astro.props as MarkdownInstance<BlogPost>
 const date = formatDate(frontmatter.publishDate)
 
-const author = (await import(
-  `../pages/author/${frontmatter.author}/index.mdx`
-)) as MarkdownInstance<Author>
+const authorSlug = slugFromUrl(frontmatter.author)
+
+const author = await authorMdx<MarkdownInstance<Author>>(authorSlug)
+const image = await authorImage(authorSlug)
 ---
 
 <Layout title={`${frontmatter.title} | CO₂ data blog`}>
@@ -20,7 +22,16 @@ const author = (await import(
         <p class="description">{frontmatter.description}</p>
         <div class="information">
           <address>
-            <a rel="author" href={author.url}>{author.frontmatter.name}</a>
+            <a rel="author" href={author.url}>
+              <Picture
+                class="author-preview-image"
+                src={image}
+                widths={[30, 60, 90]}
+                sizes="30px"
+                aspectRatio={1}
+              />
+              <p>{author.frontmatter.name}</p>
+            </a>
           </address>
           <i>on</i>
           <time datetime={date}>{date}</time>
@@ -62,12 +73,34 @@ const author = (await import(
   }
 
   .information address a {
+    display: inline-flex;
+    align-items: baseline;
     color: inherit;
+  }
+
+  .information address p {
+    margin: 0;
   }
 
   .information i {
     font-style: normal;
     opacity: 0.6;
+  }
+
+  .author-preview-image :global(picture) {
+    margin-inline: auto;
+  }
+
+  .author-preview-image :global(img) {
+    display: inline-block;
+    width: 30px;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--text-color);
+    text-decoration: none;
+    margin-right: 0.5em;
+    vertical-align: middle;
   }
 </style>
 
