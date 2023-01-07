@@ -1,17 +1,17 @@
 ---
 import { Picture } from '@astrojs/image/components'
 import type { MarkdownInstance } from 'astro'
-import type { Author, BlogPost } from 'src/types'
-import { authorImage, authorMdx, formatDate, slugFromUrl } from 'src/utils'
+import { getEntry } from 'astro:content'
+import type { AuthorCollection, BlogPost } from 'src/types'
+import { authorImage, formatDate } from 'src/utils'
 import Layout from './Layout.astro'
 
 const { frontmatter } = Astro.props as MarkdownInstance<BlogPost>
 const date = formatDate(frontmatter.publishDate)
+const key = `${frontmatter.author}/index.mdx` as AuthorCollection['id']
+const author = await getEntry('author', key)
 
-const authorSlug = slugFromUrl(frontmatter.author)
-
-const author = await authorMdx<MarkdownInstance<Author>>(authorSlug)
-const image = await authorImage(authorSlug)
+const image = await authorImage(author.slug)
 ---
 
 <Layout title={`${frontmatter.title} | CO₂ data blog`}>
@@ -22,15 +22,16 @@ const image = await authorImage(authorSlug)
         <p class="description">{frontmatter.description}</p>
         <div class="information">
           <address>
-            <a rel="author" href={author.url}>
+            <a rel="author" href={`/author/${author.slug}`}>
               <Picture
                 class="author-preview-image"
                 src={image}
                 widths={[30, 60, 90]}
                 sizes="30px"
                 aspectRatio={1}
+                alt={`Photo of ${author.data.name}`}
               />
-              <p>{author.frontmatter.name}</p>
+              <p>{author.data.name}</p>
             </a>
           </address>
           <i>on</i>
@@ -87,11 +88,11 @@ const image = await authorImage(authorSlug)
     opacity: 0.6;
   }
 
-  .author-preview-image :global(picture) {
+  :global(picture) {
     margin-inline: auto;
   }
 
-  .author-preview-image :global(img) {
+  :global(img).author-preview-image {
     display: inline-block;
     width: 30px;
     height: auto;

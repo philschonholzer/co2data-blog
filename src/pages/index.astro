@@ -1,22 +1,15 @@
 ---
 import BlogPreview from '@components/BlogPreview.astro'
-import type { BlogPost } from 'src/types'
+import { getCollection } from 'astro:content'
 import Layout from '../layouts/Layout.astro'
-const posts = await Astro.glob<BlogPost>('./*.mdx')
+const blog = await getCollection('blog')
 ---
 
 <Layout title="CO₂ data blog">
   <main>
     <h1>CO<sub>2</sub> data <span class="text-gradient">blog</span></h1>
     <div>
-      {
-        posts.map(
-          (post) =>
-            post.url && (
-              <BlogPreview blogPost={post.frontmatter} url={post.url} />
-            )
-        )
-      }
+      {blog.map((post) => <BlogPreview blogPost={post.data} url={post.slug} />)}
     </div>
   </main>
 </Layout>

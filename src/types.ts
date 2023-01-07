@@ -1,18 +1,7 @@
-type FilePath = string
-export type BlogPost = {
-  title: string
-  description: string
-  image: FilePath
-  author: FilePath
-  publishDate: string
-  updateDate?: string | undefined
-}
+import type { CollectionEntry } from 'astro:content'
 
-export type Author = {
-  name: string
-  image: string
-  description: string
-  email: string
-  twitter: string
-  url: string
-}
+export type BlogCollection = CollectionEntry<'blog'>
+export type BlogPost = CollectionEntry<'blog'>['data']
+
+export type AuthorCollection = CollectionEntry<'author'>
+export type Author = CollectionEntry<'author'>['data']

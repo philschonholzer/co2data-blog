@@ -5,5 +5,13 @@ import mdx from '@astrojs/mdx'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [image(), mdx()],
+  integrations: [
+    image({
+      serviceEntryPoint: '@astrojs/image/sharp',
+    }),
+    mdx(),
+  ],
+  experimental: {
+    contentCollections: true,
+  },
 })
